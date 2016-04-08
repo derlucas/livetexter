@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="de.derlucas.livetexter.NewControlForm">
+  <grid id="27dc6" binding="panel1" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
+    <constraints>
+      <xy x="20" y="20" width="998" height="654"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <scrollpane id="76608">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="800" height="450"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="22973" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
+            <constraints/>
+            <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+      <toolbar id="483bb">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="20"/>
+          </grid>
+        </constraints>
+        <properties>
+          <floatable value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="106ff" class="javax.swing.JButton" binding="btnMax">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+              <icon value="video-display.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="d0a68" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="594cd" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+              <icon value="font-x-generic.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="bc33b" class="javax.swing.JSpinner" binding="spinner1" default-binding="true">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+            </properties>
+          </component>
+          <component id="91a5c" class="javax.swing.JToolBar$Separator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="1ca2a" class="javax.swing.JButton" binding="btnPrev">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+              <icon value="go-previous.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="4b84f" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+            </properties>
+          </component>
+          <component id="200f3" class="javax.swing.JButton" binding="btnNext">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+              <icon value="go-next.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="74b39" class="javax.swing.JButton" binding="btnNew">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+              <icon value="document-new.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="1efa8" class="javax.swing.JButton" binding="btnSave">
+            <constraints/>
+            <properties>
+              <focusable value="false"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="document-save.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="b7ce6" class="javax.swing.JButton" binding="btnRemove">
+            <constraints/>
+            <properties>
+              <icon value="edit-clear-all.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="2e40" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties/>
+          </component>
+          <component id="5b7e8" class="javax.swing.JButton" binding="btnLeftify">
+            <constraints/>
+            <properties>
+              <icon value="format-justify-left.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="d641d" class="javax.swing.JButton" binding="btnCenter">
+            <constraints/>
+            <properties>
+              <icon value="format-justify-center.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="ac180" class="javax.swing.JButton" binding="btnRightify">
+            <constraints/>
+            <properties>
+              <icon value="format-justify-right.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="fb5e5" class="javax.swing.JSeparator">
+            <constraints/>
+            <properties/>
+          </component>
+        </children>
+      </toolbar>
+    </children>
+  </grid>
+</form>
