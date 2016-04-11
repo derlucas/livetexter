@@ -29,6 +29,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class NewControlForm extends JFrame {
 
@@ -91,8 +95,21 @@ public class NewControlForm extends JFrame {
                     FileOutputStream fos = new FileOutputStream(textsFile);
                     ObjectOutputStream oos = new ObjectOutputStream(fos);
 
+                    List<TextItem> itemList = new ArrayList<>();
+
                     for (int i = 0; i < comboBox1.getItemCount(); i++) {
                         TextItem item = (TextItem) comboBox1.getItemAt(i);
+                        itemList.add(item);
+                    }
+
+                    Collections.sort(itemList, new Comparator<TextItem>() {
+                        @Override
+                        public int compare(TextItem o1, TextItem o2) {
+                            return o1.getLabel().compareTo(o2.getLabel());
+                        }
+                    });
+
+                    for(TextItem item: itemList) {
                         oos.writeObject(item);
                     }
 
@@ -158,9 +175,19 @@ public class NewControlForm extends JFrame {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     TextItem item = (TextItem) e.getItem();
                     EditorKit editorKit = textPane1.getEditorKit();
+
                     ByteInputStream bis = new ByteInputStream();
+
                     if (item.getContent() != null) {
                         textPane1.setText("");
+
+                        MutableAttributeSet attributeSet = textPane1.getInputAttributes();
+                        StyleConstants.setForeground(attributeSet, Color.WHITE);
+                        StyleConstants.setAlignment(attributeSet, item.getAlignment());
+                        StyleConstants.setFontSize(attributeSet, item.getFontSize());
+                        textPane1.setParagraphAttributes(attributeSet, true);
+                        textPane1.setCharacterAttributes(attributeSet, true);
+
                         bis.setBuf(item.getContent().getBytes());
                         try {
                             editorKit.read(bis, textPane1.getDocument(), 0);
@@ -209,6 +236,10 @@ public class NewControlForm extends JFrame {
                 }
                 item.setLabel(getLabel(textPane1.getDocument()));
 
+                MutableAttributeSet attributeSet = textPane1.getInputAttributes();
+                item.setFontSize(StyleConstants.getFontSize(attributeSet));
+                item.setAlignment(StyleConstants.getAlignment(attributeSet));
+
                 if (wasNew) {
                     comboBox1.addItem(item);
                 }
@@ -226,6 +257,16 @@ public class NewControlForm extends JFrame {
             }
         });
 
+        btnRemove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(comboBox1.getSelectedItem() != null) {
+                    comboBox1.removeItemAt(comboBox1.getSelectedIndex());
+                    textPane1.setText("");
+                }
+            }
+        });
+
         btnCenter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -235,6 +276,7 @@ public class NewControlForm extends JFrame {
                 textPane1.setCharacterAttributes(attributeSet, true);
             }
         });
+
         btnRightify.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -255,15 +297,6 @@ public class NewControlForm extends JFrame {
             }
         });
 
-        btnRemove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(comboBox1.getSelectedItem() != null) {
-                    comboBox1.removeItemAt(comboBox1.getSelectedIndex());
-                    textPane1.setText("");
-                }
-            }
-        });
 
         displayForm.setDocument(textPane1.getDocument());
 

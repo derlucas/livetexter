@@ -39,7 +39,6 @@ public class DisplayForm extends JFrame {
         });
 
 
-        scrollPane.setBackground(Color.BLACK);
         scrollPane.setPreferredSize(new Dimension(800, 450));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

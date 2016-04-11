@@ -61,6 +61,7 @@
             <constraints/>
             <properties>
               <focusable value="false"/>
+              <font size="20"/>
             </properties>
           </component>
           <component id="91a5c" class="javax.swing.JToolBar$Separator">
