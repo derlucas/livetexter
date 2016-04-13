@@ -37,12 +37,21 @@
         </properties>
         <border type="none"/>
         <children>
+          <component id="faf1f" class="javax.swing.JButton" binding="btnSaveAllTexts">
+            <constraints/>
+            <properties>
+              <icon value="emblem-package.png"/>
+              <text value=""/>
+              <toolTipText value="Save all Texts into JSON File"/>
+            </properties>
+          </component>
           <component id="106ff" class="javax.swing.JButton" binding="btnMax">
             <constraints/>
             <properties>
               <focusable value="false"/>
               <icon value="video-display.png"/>
               <text value=""/>
+              <toolTipText value="Switch View to Fullscreen"/>
             </properties>
           </component>
           <component id="d0a68" class="javax.swing.JToolBar$Separator">
@@ -74,6 +83,7 @@
               <focusable value="false"/>
               <icon value="go-previous.png"/>
               <text value=""/>
+              <toolTipText value="Select previous Item from List"/>
             </properties>
           </component>
           <component id="4b84f" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
@@ -88,6 +98,7 @@
               <focusable value="false"/>
               <icon value="go-next.png"/>
               <text value=""/>
+              <toolTipText value="Select next Item from List"/>
             </properties>
           </component>
           <component id="74b39" class="javax.swing.JButton" binding="btnNew">
@@ -96,6 +107,7 @@
               <focusable value="false"/>
               <icon value="document-new.png"/>
               <text value=""/>
+              <toolTipText value="Clear Input and create New Item"/>
             </properties>
           </component>
           <component id="1efa8" class="javax.swing.JButton" binding="btnSave">
@@ -105,6 +117,7 @@
               <horizontalTextPosition value="0"/>
               <icon value="document-save.png"/>
               <text value=""/>
+              <toolTipText value="Store Text into List"/>
             </properties>
           </component>
           <component id="b7ce6" class="javax.swing.JButton" binding="btnRemove">
@@ -112,6 +125,7 @@
             <properties>
               <icon value="edit-clear-all.png"/>
               <text value=""/>
+              <toolTipText value="Clear Text from Input"/>
             </properties>
           </component>
           <component id="2e40" class="javax.swing.JSeparator">

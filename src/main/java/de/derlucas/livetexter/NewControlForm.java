@@ -1,5 +1,7 @@
 package de.derlucas.livetexter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import de.derlucas.livetexter.model.TextItem;
@@ -22,13 +24,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,8 +47,11 @@ public class NewControlForm extends JFrame {
     private JButton btnCenter;
     private JButton btnRightify;
     private JButton btnRemove;
+    private JButton btnSaveAllTexts;
     private DisplayForm displayForm;
     private boolean mustSave = false;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final File textsFile = new File("texter.json");
 
     public NewControlForm(final DisplayForm displayForm) throws HeadlessException {
         super("livetexter controller");
@@ -61,63 +62,27 @@ public class NewControlForm extends JFrame {
         setContentPane(panel1);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        final File textsFile = new File("texter.data");
+
         if (textsFile.exists() && textsFile.canRead()) {
-
-            try {
-                FileInputStream fis = new FileInputStream(textsFile);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                TextItem item = null;
-
-                do {
-                    item = (TextItem) ois.readObject();
-                    if (item != null) {
-                        comboBox1.addItem(item);
-                    }
-                }
-                while (item != null);
-            }
-            catch (EOFException ignored) {
-
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+            loadTexts();
         }
 
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                if (mustSave) {
 
-                if (!mustSave) { return; }
+                    final JOptionPane optionPane = new JOptionPane("You have unsaved changes, do you want to save them?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+                    final JDialog jDialog = optionPane.createDialog("livetexter");
+                    jDialog.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                    jDialog.pack();
+                    jDialog.setVisible(true);
 
-                try {
-                    FileOutputStream fos = new FileOutputStream(textsFile);
-                    ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-                    List<TextItem> itemList = new ArrayList<>();
-
-                    for (int i = 0; i < comboBox1.getItemCount(); i++) {
-                        TextItem item = (TextItem) comboBox1.getItemAt(i);
-                        itemList.add(item);
+                    int val = ((Integer)optionPane.getValue()).intValue();
+                    if(val == JOptionPane.YES_OPTION) {
+                        saveTexts();
                     }
 
-                    Collections.sort(itemList, new Comparator<TextItem>() {
-                        @Override
-                        public int compare(TextItem o1, TextItem o2) {
-                            return o1.getLabel().compareTo(o2.getLabel());
-                        }
-                    });
-
-                    for(TextItem item: itemList) {
-                        oos.writeObject(item);
-                    }
-
-                    oos.close();
-                    fos.close();
-                }
-                catch (IOException e1) {
-                    e1.printStackTrace();
                 }
             }
         });
@@ -263,6 +228,7 @@ public class NewControlForm extends JFrame {
                 if(comboBox1.getSelectedItem() != null) {
                     comboBox1.removeItemAt(comboBox1.getSelectedIndex());
                     textPane1.setText("");
+                    saveTexts();
                 }
             }
         });
@@ -294,6 +260,13 @@ public class NewControlForm extends JFrame {
                 StyleConstants.setAlignment(attributeSet, StyleConstants.ALIGN_LEFT);
                 textPane1.setParagraphAttributes(attributeSet, true);
                 textPane1.setCharacterAttributes(attributeSet, true);
+            }
+        });
+
+        btnSaveAllTexts.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveTexts();
             }
         });
 
@@ -334,6 +307,50 @@ public class NewControlForm extends JFrame {
     private void goPrevPreset() {
         if (comboBox1.getSelectedIndex() > 0) {
             comboBox1.setSelectedIndex(comboBox1.getSelectedIndex() - 1);
+        }
+    }
+
+    private void saveTexts() {
+        try {
+
+            final FileWriter fileWriter = new FileWriter(textsFile, false);
+            final List<TextItem> itemList = new ArrayList<>();
+
+            for (int i = 0; i < comboBox1.getItemCount(); i++) {
+                TextItem item = (TextItem) comboBox1.getItemAt(i);
+                itemList.add(item);
+            }
+
+            Collections.sort(itemList, new Comparator<TextItem>() {
+                @Override
+                public int compare(TextItem o1, TextItem o2) {
+                    return o1.getLabel().compareTo(o2.getLabel());
+                }
+            });
+
+            fileWriter.write(objectMapper.writeValueAsString(itemList));
+            fileWriter.close();
+        }
+        catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private void loadTexts() {
+
+        try {
+            List<TextItem> itemList = objectMapper.readValue(textsFile,  new TypeReference<List<TextItem>>() {});
+
+            while(comboBox1.getItemCount() > 0) {
+                comboBox1.removeItemAt(0);
+            }
+
+            for(TextItem item: itemList) {
+                comboBox1.addItem(item);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
