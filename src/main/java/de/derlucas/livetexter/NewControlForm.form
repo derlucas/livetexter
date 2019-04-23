@@ -83,7 +83,7 @@
               <focusable value="false"/>
               <icon value="go-previous.png"/>
               <text value=""/>
-              <toolTipText value="Select previous Item from List"/>
+              <toolTipText value="Select previous Item from List (CTRL+LEFT Arrow)"/>
             </properties>
           </component>
           <component id="4b84f" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
@@ -98,7 +98,7 @@
               <focusable value="false"/>
               <icon value="go-next.png"/>
               <text value=""/>
-              <toolTipText value="Select next Item from List"/>
+              <toolTipText value="Select next Item from List (CTRL+RIGHT Arrow)"/>
             </properties>
           </component>
           <component id="74b39" class="javax.swing.JButton" binding="btnNew">
